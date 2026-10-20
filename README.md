@@ -1,1 +1,1 @@
-https://motorista-fortaleza-95s7m1mv1-marioduartees-projects.vercel.app/
+https://motorista-fortaleza-uw0wcr3lk-marioduartees-projects.vercel.app/
