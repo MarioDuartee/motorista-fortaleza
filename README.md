@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Mário Duarte | Motorista Particular & Translados em Fortaleza
 
 Site de apresentação e agendamento de viagens do motorista particular **Mário Duarte**, em Fortaleza (CE). A pessoa conhece o serviço e o carro (Citroën C4 Cactus), simula o trajeto no mapa, vê o valor estimado e envia o pedido já pronto para o WhatsApp.
@@ -68,3 +69,6 @@ Atendimento e agendamento pelo WhatsApp: (85) 99902-2591.
 ---
 
 Feito com React e muita vontade de aprender. 🚗
+=======
+https://motorista-fortaleza-uw0wcr3lk-marioduartees-projects.vercel.app/
+>>>>>>> ca239cba0b7fed155f8b79ec09705ae26fc3a4f1

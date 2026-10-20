@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Shield, Clock, Thermometer, Sparkles, CheckCircle2, UserCheck, FileText, Download } from 'lucide-react';
-import { driverProfile } from '../data/driverData';
 import { useI18n } from '../i18n/LanguageContext';
 
 import c4ExteriorImg from '../assets/images/c4_cactus_white_suv_1791550207794.jpg';
