@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Mário Duarte | Motorista Particular & Translados em Fortaleza
 
 Site de apresentação e agendamento de viagens do motorista particular **Mário Duarte**, em Fortaleza (CE). A pessoa conhece o serviço e o carro (Citroën C4 Cactus), simula o trajeto no mapa, vê o valor estimado e envia o pedido já pronto para o WhatsApp.
