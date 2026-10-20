@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { MessageSquare, Calendar, ShieldCheck, Award, Clock, MapPin } from 'lucide-react';
 import { driverProfile } from '../data/driverData';
+import { useI18n } from '../i18n/LanguageContext';
 
 import heroDriverImg from '../assets/images/mario_duarte_foto_real.jpg';
 
@@ -11,6 +12,7 @@ interface HeroProps {
 
 export default function Hero({ onOpenContactModal }: HeroProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { t } = useI18n();
 
   const handleWhatsAppBooking = () => {
     const text = encodeURIComponent(
@@ -33,11 +35,11 @@ export default function Hero({ onOpenContactModal }: HeroProps) {
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-neutral-400 mb-6 font-medium"
         >
-          <span className="text-amber-400">Motorista Particular & Translados Exclusivos</span>
+          <span className="text-amber-400">{t.hero.kicker1}</span>
           <span aria-hidden="true">·</span>
-          <span>Fortaleza - CE e Litoral Cearense</span>
+          <span>{t.hero.kicker2}</span>
           <span aria-hidden="true">·</span>
-          <span>Citroën C4 Cactus</span>
+          <span>{t.hero.kicker3}</span>
         </motion.div>
 
         {/* 2-Column Desktop Grid */}
@@ -52,23 +54,23 @@ export default function Hero({ onOpenContactModal }: HeroProps) {
           >
             
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-[1.15] text-balance">
-              Mais de 30.000 corridas com pontualidade, segurança e ar gelado em Fortaleza
+              {t.hero.title}
             </h1>
 
             <p className="mt-5 text-base sm:text-lg text-neutral-300 leading-relaxed max-w-2xl">
-              Olá, sou o <strong className="text-white font-semibold">{driverProfile.name}</strong>. Realizo translados para o Aeroporto Pinto Martins (FOR), Beach Park, praias do Ceará e viagens com o meu Citroën C4 Cactus. Conforto de SUV, atendimento cortês e compromisso rigoroso com o seu horário.
+              {t.hero.introBefore}<strong className="text-white font-semibold">{driverProfile.name}</strong>{t.hero.introAfter}
             </p>
 
             {/* Credibility highlights text line */}
             <div className="mt-6 flex flex-wrap items-center gap-y-2 gap-x-4 text-xs sm:text-sm text-neutral-400">
               <div className="flex items-center gap-1.5 text-neutral-200">
                 <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
-                <span className="font-semibold text-white">Fortaleza & Litoral</span>
+                <span className="font-semibold text-white">{t.hero.place}</span>
               </div>
               <span aria-hidden="true">·</span>
               <div className="flex items-center gap-1.5">
                 <Clock className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>Chegada com antecedência garantida</span>
+                <span>{t.hero.punctuality}</span>
               </div>
             </div>
 
@@ -79,7 +81,7 @@ export default function Hero({ onOpenContactModal }: HeroProps) {
                 className="flex items-center gap-2.5 px-6 py-3.5 text-sm font-semibold text-neutral-950 bg-amber-400 hover:bg-amber-300 rounded-lg transition-all duration-200 shadow-md shadow-amber-400/20 active:scale-95 whitespace-nowrap cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4 text-neutral-950" />
-                <span>Chamar no WhatsApp</span>
+                <span>{t.hero.ctaWhatsApp}</span>
               </button>
 
               <a
@@ -87,30 +89,30 @@ export default function Hero({ onOpenContactModal }: HeroProps) {
                 className="flex items-center gap-2 px-5 py-3.5 text-sm font-medium text-white bg-neutral-900 border border-white/15 hover:border-amber-400/40 hover:bg-neutral-850 rounded-lg transition-colors whitespace-nowrap"
               >
                 <Calendar className="w-4 h-4 text-amber-400" />
-                <span>Simular Trajeto & Orçamento</span>
+                <span>{t.hero.ctaSimulate}</span>
               </a>
 
               <button
                 onClick={onOpenContactModal}
                 className="text-xs sm:text-sm font-medium text-neutral-400 hover:text-white underline underline-offset-4 decoration-neutral-600 transition-colors py-2 whitespace-nowrap cursor-pointer"
               >
-                Salvar Contato no Celular (vCard)
+                {t.hero.ctaSave}
               </button>
             </div>
 
             {/* Badges and recognitions - Clean unboxed presentation */}
             <div className="mt-10 pt-6 border-t border-white/10">
               <div className="text-xs uppercase tracking-wider text-neutral-500 font-semibold mb-3">
-                Destaques da Experiência Profissional
+                {t.hero.highlightsTitle}
               </div>
               <div className="flex flex-wrap items-center gap-2">
-                {driverProfile.badges.map((badge) => (
+                {t.hero.badges.map((badge) => (
                   <div
-                    key={badge.name}
+                    key={badge}
                     className="inline-flex items-center gap-2 px-3 py-1.5 bg-neutral-900/80 border border-white/5 rounded-md text-xs text-neutral-300"
                   >
                     <Award className="w-3.5 h-3.5 text-amber-400" />
-                    <span>{badge.name}</span>
+                    <span>{badge}</span>
                   </div>
                 ))}
               </div>
@@ -139,7 +141,7 @@ export default function Hero({ onOpenContactModal }: HeroProps) {
               {/* Real Generated Photograph */}
               <img
                 src={heroDriverImg}
-                alt="Mário Duarte ao lado do seu Citroën C4 Cactus branco na orla de Fortaleza"
+                alt={t.hero.photoAlt}
                 referrerPolicy="no-referrer"
                 onLoad={() => setImageLoaded(true)}
                 className={`absolute inset-0 w-full h-full object-cover object-[50%_20%] transition-all duration-700 ${
@@ -157,9 +159,9 @@ export default function Hero({ onOpenContactModal }: HeroProps) {
                   <div className="text-sm font-semibold text-white">C4 Cactus</div>
                 </div>
                 <div className="text-right">
-                  <div className="text-xs text-neutral-400">Experiência</div>
+                  <div className="text-xs text-neutral-400">{t.hero.experience}</div>
                   <div className="text-sm font-bold text-amber-400 font-mono">
-                    +30.000 Viagens
+                    {t.hero.trips}
                   </div>
                 </div>
               </div>
@@ -178,10 +180,10 @@ export default function Hero({ onOpenContactModal }: HeroProps) {
         >
           <div>
             <div className="text-2xl sm:text-3xl font-extrabold text-amber-400 font-mono tabular-nums">
-              +30.000
+              {t.hero.stat1Value}
             </div>
             <div className="mt-1 text-xs sm:text-sm text-neutral-400">
-              Corridas realizadas com segurança
+              {t.hero.stat1Label}
             </div>
           </div>
           <div>
@@ -189,7 +191,7 @@ export default function Hero({ onOpenContactModal }: HeroProps) {
               C4 Cactus
             </div>
             <div className="mt-1 text-xs sm:text-sm text-neutral-400">
-              SUV compacto com suspensão confortável e ar-condicionado potente
+              {t.hero.stat2Label}
             </div>
           </div>
           <div>
@@ -197,7 +199,7 @@ export default function Hero({ onOpenContactModal }: HeroProps) {
               Fortaleza
             </div>
             <div className="mt-1 text-xs sm:text-sm text-neutral-400">
-              Aeroporto, Beach Park e Litoral
+              {t.hero.stat3Label}
             </div>
           </div>
           <div>
@@ -205,7 +207,7 @@ export default function Hero({ onOpenContactModal }: HeroProps) {
               100%
             </div>
             <div className="mt-1 text-xs sm:text-sm text-neutral-400">
-              Pontualidade nos agendamentos
+              {t.hero.stat4Label}
             </div>
           </div>
         </motion.div>

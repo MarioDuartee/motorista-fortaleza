@@ -17,14 +17,17 @@ import PrivacyModal from './components/PrivacyModal';
 import Footer from './components/Footer';
 import FadeInUp from './components/FadeInUp';
 import { driverProfile } from './data/driverData';
+import { useI18n } from './i18n/LanguageContext';
+import type { QuoteRequest, ServiceId } from './types';
 
 export default function App() {
+  const { t } = useI18n();
   const [contactModalOpen, setContactModalOpen] = useState(false);
   const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
-  const [selectedServiceForQuote, setSelectedServiceForQuote] = useState<string>('');
+  const [quoteRequest, setQuoteRequest] = useState<QuoteRequest | null>(null);
 
-  const handleSelectServiceForQuote = (serviceTitle: string) => {
-    setSelectedServiceForQuote(serviceTitle);
+  const handleSelectServiceForQuote = (serviceId: ServiceId) => {
+    setQuoteRequest((prev) => ({ id: serviceId, nonce: (prev?.nonce ?? 0) + 1 }));
     const simulatorEl = document.getElementById('simulador');
     if (simulatorEl) {
       simulatorEl.scrollIntoView({ behavior: 'smooth' });
@@ -67,7 +70,7 @@ export default function App() {
 
         {/* Interactive Trip Simulator & WhatsApp Quote Builder */}
         <FadeInUp>
-          <TripSimulator preSelectedService={selectedServiceForQuote} />
+          <TripSimulator preSelected={quoteRequest} />
         </FadeInUp>
 
         {/* FAQ Section */}
@@ -96,11 +99,11 @@ export default function App() {
       />
 
       {/* Mobile Floating Quick Action (Compliant with 15% sticky cap) */}
-      <aside aria-label="Ações rápidas" className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-2 sm:hidden">
+      <aside aria-label={t.header.quickActions} className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-2 sm:hidden">
         <button
           onClick={handleFloatingWhatsApp}
           className="flex items-center gap-2 p-3.5 bg-amber-400 text-neutral-950 rounded-full shadow-xl shadow-amber-400/25 active:scale-95 transition-all cursor-pointer"
-          aria-label="Abrir conversa no WhatsApp"
+          aria-label={t.header.openWhatsApp}
         >
           <MessageSquare className="w-5 h-5 fill-neutral-950" />
           <span className="text-xs font-bold pr-1">WhatsApp</span>

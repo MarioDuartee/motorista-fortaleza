@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { MessageSquare, Menu, X, PhoneCall } from 'lucide-react';
 import { driverProfile } from '../data/driverData';
+import { useI18n } from '../i18n/LanguageContext';
+import LanguageSwitcher from './LanguageSwitcher';
+import ThemeToggle from './ThemeToggle';
 
 interface HeaderProps {
   onOpenContactModal: () => void;
@@ -8,6 +11,7 @@ interface HeaderProps {
 
 export default function Header({ onOpenContactModal }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useI18n();
 
   const handleWhatsAppClick = () => {
     const text = encodeURIComponent(
@@ -27,7 +31,7 @@ export default function Header({ onOpenContactModal }: HeaderProps) {
             className="text-lg sm:text-xl font-bold tracking-tight text-white hover:text-amber-400 transition-colors whitespace-nowrap shrink-0"
           >
             {driverProfile.name}
-            <span className="text-amber-400 font-light ml-1 text-sm sm:text-base">· Executivo VIP</span>
+            <span className="text-amber-400 font-light ml-1 text-sm sm:text-base">{t.header.tagline}</span>
           </a>
 
           {/* Zone 2: 4-5 clean single-line text navigation links */}
@@ -36,51 +40,58 @@ export default function Header({ onOpenContactModal }: HeaderProps) {
               href="#apresentacao"
               className="hover:text-amber-400 transition-colors whitespace-nowrap shrink-0"
             >
-              Apresentação
+              {t.nav.presentation}
             </a>
             <a
               href="#veiculo"
               className="hover:text-amber-400 transition-colors whitespace-nowrap shrink-0"
             >
-              O C4 Cactus
+              {t.nav.vehicle}
             </a>
             <a
               href="#servicos"
               className="hover:text-amber-400 transition-colors whitespace-nowrap shrink-0"
             >
-              Serviços
+              {t.nav.services}
             </a>
             <a
               href="#simulador"
               className="hover:text-amber-400 transition-colors whitespace-nowrap shrink-0"
             >
-              Simulador
+              {t.nav.simulator}
             </a>
             <a
               href="#duvidas"
               className="hover:text-amber-400 transition-colors whitespace-nowrap shrink-0"
             >
-              Dúvidas
+              {t.nav.faq}
             </a>
           </nav>
 
           {/* Zone 3: 1 primary action */}
           <div className="hidden sm:flex items-center gap-3 shrink-0">
+            <LanguageSwitcher />
+            <ThemeToggle />
             <button
               onClick={handleWhatsAppClick}
               className="flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-semibold text-neutral-950 bg-amber-400 hover:bg-amber-300 rounded-lg transition-all duration-200 whitespace-nowrap shrink-0 shadow-sm shadow-amber-400/20 active:scale-95"
             >
               <MessageSquare className="w-4 h-4 text-neutral-950" />
-              <span>Agendar no WhatsApp</span>
+              <span>{t.header.bookWhatsApp}</span>
             </button>
           </div>
 
           {/* Mobile hamburger button */}
           <div className="flex md:hidden items-center gap-2">
+            <div className="sm:hidden flex items-center gap-2">
+              <LanguageSwitcher />
+              <ThemeToggle />
+            </div>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-neutral-400 hover:text-white rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-400"
-              aria-label="Abrir menu de navegação"
+              aria-label={mobileMenuOpen ? t.header.closeMenu : t.header.openMenu}
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -98,35 +109,35 @@ export default function Header({ onOpenContactModal }: HeaderProps) {
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-md hover:bg-neutral-900 hover:text-amber-400 transition-colors"
             >
-              Apresentação
+              {t.nav.presentation}
             </a>
             <a
               href="#veiculo"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-md hover:bg-neutral-900 hover:text-amber-400 transition-colors"
             >
-              O Veículo
+              {t.nav.vehicleMobile}
             </a>
             <a
               href="#servicos"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-md hover:bg-neutral-900 hover:text-amber-400 transition-colors"
             >
-              Serviços
+              {t.nav.services}
             </a>
             <a
               href="#simulador"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-md hover:bg-neutral-900 hover:text-amber-400 transition-colors"
             >
-              Simulador de Trajetos
+              {t.nav.simulatorMobile}
             </a>
             <a
               href="#duvidas"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-md hover:bg-neutral-900 hover:text-amber-400 transition-colors"
             >
-              Dúvidas Frequentes
+              {t.nav.faqLong}
             </a>
           </div>
 
@@ -139,7 +150,7 @@ export default function Header({ onOpenContactModal }: HeaderProps) {
               className="w-full flex items-center justify-center gap-2 py-3 px-4 text-sm font-semibold text-neutral-950 bg-amber-400 rounded-lg hover:bg-amber-300 transition-colors"
             >
               <MessageSquare className="w-4 h-4" />
-              <span>Chamar no WhatsApp</span>
+              <span>{t.header.callWhatsApp}</span>
             </button>
             <button
               onClick={() => {
@@ -149,7 +160,7 @@ export default function Header({ onOpenContactModal }: HeaderProps) {
               className="w-full flex items-center justify-center gap-2 py-2.5 px-4 text-xs font-medium text-neutral-300 bg-neutral-900 border border-white/10 rounded-lg hover:bg-neutral-800 transition-colors"
             >
               <PhoneCall className="w-3.5 h-3.5 text-amber-400" />
-              <span>Cartão de Contato & QR Code</span>
+              <span>{t.header.contactCard}</span>
             </button>
           </div>
         </div>

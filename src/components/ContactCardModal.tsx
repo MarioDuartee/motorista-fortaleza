@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Download, MessageSquare, Phone, MapPin, Check, Copy, QrCode } from 'lucide-react';
 import { driverProfile } from '../data/driverData';
+import { useI18n } from '../i18n/LanguageContext';
 
 interface ContactCardModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface ContactCardModalProps {
 }
 
 export default function ContactCardModal({ isOpen, onClose }: ContactCardModalProps) {
+  const { t } = useI18n();
   const [copied, setCopied] = useState(false);
 
   // Generate and download a real .vcf (vCard) file
@@ -17,10 +19,10 @@ export default function ContactCardModal({ isOpen, onClose }: ContactCardModalPr
 VERSION:3.0
 FN:${driverProfile.name}
 N:Duarte;Mário;;;
-TITLE:${driverProfile.headline}
+TITLE:${t.contact.headline}
 TEL;TYPE=CELL,VOICE:${driverProfile.phone}
-ADR;TYPE=WORK:;;${driverProfile.location};;;;
-NOTE:Motorista Particular & Translados em Fortaleza. Citroën C4 Cactus. Mais de 30.000 corridas realizadas com segurança e pontualidade.
+ADR;TYPE=WORK:;;${t.contact.location};;;;
+NOTE:${t.contact.vcardNote}
 URL:${window.location.href}
 END:VCARD`;
 
@@ -68,7 +70,7 @@ END:VCARD`;
             <button
               onClick={onClose}
               className="absolute top-4 right-4 p-2 text-neutral-400 hover:text-white rounded-lg hover:bg-neutral-800 transition-colors cursor-pointer"
-              aria-label="Fechar janela"
+              aria-label={t.contact.close}
             >
               <X className="w-5 h-5" />
             </button>
@@ -82,10 +84,10 @@ END:VCARD`;
                 {driverProfile.name}
               </h3>
               <p className="text-xs text-amber-400 font-medium">
-                {driverProfile.headline}
+                {t.contact.headline}
               </p>
               <p className="mt-1 text-xs text-neutral-400">
-                {driverProfile.location}
+                {t.contact.location}
               </p>
             </div>
 
@@ -99,7 +101,8 @@ END:VCARD`;
                 <button
                   onClick={handleCopyPhone}
                   className="text-neutral-400 hover:text-white p-1 cursor-pointer"
-                  title="Copiar telefone"
+                  title={t.contact.copyPhone}
+                  aria-label={t.contact.copyPhone}
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                 </button>
@@ -108,13 +111,13 @@ END:VCARD`;
 
               <div className="p-3 rounded-lg bg-neutral-950 border border-white/5 flex items-center gap-2.5 text-neutral-300">
                 <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>Fortaleza - CE</span>
+                <span>{t.contact.city}</span>
               </div>
             </div>
 
             {/* QR Code Card */}
             <div className="mt-6 p-4 rounded-xl bg-neutral-950 border border-white/10 flex items-center justify-center gap-4">
-              <div className="w-24 h-24 bg-white p-1.5 rounded-lg flex items-center justify-center shadow">
+              <div className="w-24 h-24 p-1.5 rounded-lg flex items-center justify-center shadow" style={{ background: '#ffffff' }}>
                 {/* Clean SVG QR Code representation */}
                 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="808.000000pt" height="810.000000pt" viewBox="0 0 808.000000 810.000000"
@@ -297,10 +300,10 @@ m-550 -410 l0 -275 -140 0 -140 0 0 -130 0 -130 -130 0 -130 0 0 265 0 265
               <div className="text-left text-xs text-neutral-300">
                 <div className="font-semibold text-white flex items-center gap-1.5">
                   <QrCode className="w-4 h-4 text-amber-400" />
-                  <span>Aponte a Câmera</span>
+                  <span>{t.contact.qrTitle}</span>
                 </div>
                 <p className="mt-1 text-neutral-400 text-[11px] leading-relaxed">
-                  Escaneie o código para abrir o WhatsApp diretamente no seu celular.
+                  {t.contact.qrText}
                 </p>
               </div>
             </div>
@@ -312,7 +315,7 @@ m-550 -410 l0 -275 -140 0 -140 0 0 -130 0 -130 -130 0 -130 0 0 265 0 265
                 className="w-full flex items-center justify-center gap-2 py-3 px-4 text-xs sm:text-sm font-semibold text-neutral-950 bg-amber-400 hover:bg-amber-300 rounded-lg transition-colors shadow cursor-pointer"
               >
                 <Download className="w-4 h-4" />
-                <span>Salvar Contato na Agenda (vCard .vcf)</span>
+                <span>{t.contact.saveVcard}</span>
               </button>
 
               <button
@@ -320,7 +323,7 @@ m-550 -410 l0 -275 -140 0 -140 0 0 -130 0 -130 -130 0 -130 0 0 265 0 265
                 className="w-full flex items-center justify-center gap-2 py-2.5 px-4 text-xs font-semibold text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 rounded-lg transition-colors cursor-pointer"
               >
                 <MessageSquare className="w-4 h-4 text-emerald-400" />
-                <span>Abrir Conversa no WhatsApp</span>
+                <span>{t.contact.openWhatsApp}</span>
               </button>
             </div>
 

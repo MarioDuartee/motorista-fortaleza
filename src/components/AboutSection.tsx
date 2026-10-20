@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Shield, Clock, Thermometer, Sparkles, CheckCircle2, UserCheck, FileText, Download } from 'lucide-react';
 import { driverProfile } from '../data/driverData';
+import { useI18n } from '../i18n/LanguageContext';
 
 import c4ExteriorImg from '../assets/images/c4_cactus_white_suv_1791550207794.jpg';
 
@@ -11,33 +12,15 @@ interface AboutSectionProps {
 
 export default function AboutSection({ onOpenContactModal }: AboutSectionProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { t } = useI18n();
 
-  const pillars = [
-    {
-      index: '01',
-      title: 'Pontualidade Inegociável',
-      description: 'Chegada com 10 a 15 minutos de antecedência no endereço ou aeroporto. Com mais de 30 mil corridas, conheço cada rota e tráfego de Fortaleza para nunca atrasar.',
-      icon: Clock
-    },
-    {
-      index: '02',
-      title: 'Ar-Condicionado Sempre Gelado',
-      description: 'O calor de Fortaleza não é problema. O C4 Cactus conta com ar-condicionado digital potente e você escolhe a temperatura ideal para a sua viagem.',
-      icon: Thermometer
-    },
-    {
-      index: '03',
-      title: 'Conforto & Suspensão de SUV',
-      description: 'O Citroën C4 Cactus possui suspensão com amortecimento suave superior, absorvendo irregularidades no asfalto ou paralelepípedo com máxima maciez.',
-      icon: Shield
-    },
-    {
-      index: '04',
-      title: 'Carro Sempre Limpo',
-      description: 'Higienização rigorosa diária, interior aspirado, sem cheiros fortes e com água mineral geladinha e carregadores de celular prontos para você.',
-      icon: Sparkles
-    }
+  const pillarMeta = [
+    { index: '01', icon: Clock },
+    { index: '02', icon: Thermometer },
+    { index: '03', icon: Shield },
+    { index: '04', icon: Sparkles },
   ];
+  const pillars = pillarMeta.map((meta, i) => ({ ...meta, ...t.about.pillars[i] }));
 
   return (
     <section id="apresentacao" className="py-16 lg:py-24 border-b border-white/10 bg-neutral-900/30">
@@ -46,13 +29,13 @@ export default function AboutSection({ onOpenContactModal }: AboutSectionProps) 
         {/* Section Header */}
         <div className="max-w-3xl">
           <div className="text-xs font-semibold uppercase tracking-wider text-amber-400 mb-2">
-            Apresentação Profissional
+            {t.about.kicker}
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight text-balance">
-            Mário Duarte: Experiência de +30.000 corridas ao seu serviço
+            {t.about.title}
           </h2>
           <p className="mt-4 text-base text-neutral-300 leading-relaxed">
-            Moro e atuo em Fortaleza com dedicação exclusiva ao transporte particular e translados. São mais de 30 mil corridas concluídas ao longo dos anos, conhecendo cada detalhe do trânsito da capital cearense, acessos ao Aeroporto Pinto Martins e as melhores rotas para o Beach Park, Cumbuco, Jeri e praias do litoral leste e oeste.
+            {t.about.text}
           </p>
         </div>
 
@@ -100,35 +83,35 @@ export default function AboutSection({ onOpenContactModal }: AboutSectionProps) 
             >
               <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-3">
                 <UserCheck className="w-4 h-4 text-emerald-400" />
-                <span>Segurança & Compromisso Profissional</span>
+                <span>{t.about.safetyTitle}</span>
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-neutral-300">
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>CNH Categoria B com EAR (Exerce Atividade Remunerada) regularizada</span>
+                  <span>{t.about.safety[0]}</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Citroën C4 Cactus com revisões preventivas em dia</span>
+                  <span>{t.about.safety[1]}</span>
                 </div>
 
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Atendimento pontual com comunicação direta pelo WhatsApp</span>
+                  <span>{t.about.safety[2]}</span>
                 </div>
               </div>
 
               <div className="mt-4 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
                 <span className="text-xs text-neutral-500">
-                  Agendamentos flexíveis para viagens, negócios ou turismo.
+                  {t.about.flexible}
                 </span>
                 <button
                   onClick={onOpenContactModal}
                   className="flex items-center gap-1.5 text-xs font-medium text-amber-400 hover:text-amber-300 transition-colors cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>Salvar Contato de Mário Duarte (.vcf)</span>
+                  <span>{t.about.saveContact}</span>
                 </button>
               </div>
             </motion.div>
@@ -153,7 +136,7 @@ export default function AboutSection({ onOpenContactModal }: AboutSectionProps) 
 
               <img
                 src={c4ExteriorImg}
-                alt="Citroën C4 Cactus em Fortaleza"
+                alt={t.about.imageAlt}
                 referrerPolicy="no-referrer"
                 onLoad={() => setImageLoaded(true)}
                 className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
@@ -165,9 +148,9 @@ export default function AboutSection({ onOpenContactModal }: AboutSectionProps) 
 
               <div className="absolute bottom-4 left-4 right-4 p-4 rounded-lg bg-neutral-950/85 backdrop-blur-md border border-white/10">
                 <div className="text-xs text-amber-400 font-medium">Citroën C4 Cactus</div>
-                <div className="text-sm font-semibold text-white">SUV Compacto Impecável</div>
+                <div className="text-sm font-semibold text-white">{t.about.imageTitle}</div>
                 <div className="mt-1 text-xs text-neutral-400">
-                  Altura do solo ideal e estabilidade superior para trafegar com tranquilidade pelas vias de Fortaleza e praias.
+                  {t.about.imageText}
                 </div>
               </div>
             </motion.div>

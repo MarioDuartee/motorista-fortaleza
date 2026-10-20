@@ -1,5 +1,6 @@
 import { MessageSquare, Phone, ShieldCheck } from 'lucide-react';
 import { driverProfile } from '../data/driverData';
+import { useI18n } from '../i18n/LanguageContext';
 
 interface FooterProps {
   onOpenContactModal: () => void;
@@ -7,6 +8,7 @@ interface FooterProps {
 }
 
 export default function Footer({ onOpenContactModal, onOpenPrivacyModal }: FooterProps) {
+  const { t } = useI18n();
   const currentYear = new Date().getFullYear();
 
   const handleWhatsApp = () => {
@@ -23,37 +25,37 @@ export default function Footer({ onOpenContactModal, onOpenPrivacyModal }: Foote
           <div className="md:col-span-2 space-y-3">
             <div className="text-base font-bold text-white tracking-tight">
               {driverProfile.name}
-              <span className="text-amber-400 font-normal ml-1">· Fortaleza - CE</span>
+              <span className="text-amber-400 font-normal ml-1">{t.footer.locationSuffix}</span>
             </div>
             <p className="text-xs text-neutral-400 max-w-md leading-relaxed">
-              Transporte particular e translados com pontualidade, ar-condicionado potente e conforto de SUV Citroën C4 Cactus em Fortaleza, aeroporto e praias.
+              {t.footer.bio}
             </p>
             <div className="flex items-center gap-2 text-[11px] text-emerald-400 pt-1">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>+30.000 Corridas Realizadas & CNH Profissional com EAR</span>
+              <span>{t.footer.badge}</span>
             </div>
           </div>
 
           {/* Col 2: Navigation Links */}
           <div className="space-y-2">
             <div className="text-xs font-semibold uppercase tracking-wider text-white">
-              Navegação
+              {t.footer.navTitle}
             </div>
             <ul className="space-y-1.5">
               <li>
-                <a href="#apresentacao" className="hover:text-amber-400 transition-colors">Apresentação</a>
+                <a href="#apresentacao" className="hover:text-amber-400 transition-colors">{t.nav.presentation}</a>
               </li>
               <li>
-                <a href="#veiculo" className="hover:text-amber-400 transition-colors">O C4 Cactus</a>
+                <a href="#veiculo" className="hover:text-amber-400 transition-colors">{t.nav.vehicle}</a>
               </li>
               <li>
-                <a href="#servicos" className="hover:text-amber-400 transition-colors">Serviços</a>
+                <a href="#servicos" className="hover:text-amber-400 transition-colors">{t.nav.services}</a>
               </li>
               <li>
-                <a href="#simulador" className="hover:text-amber-400 transition-colors">Simulador de Viagem</a>
+                <a href="#simulador" className="hover:text-amber-400 transition-colors">{t.nav.simulatorFooter}</a>
               </li>
               <li>
-                <a href="#duvidas" className="hover:text-amber-400 transition-colors">Dúvidas Frequentes</a>
+                <a href="#duvidas" className="hover:text-amber-400 transition-colors">{t.nav.faqLong}</a>
               </li>
             </ul>
           </div>
@@ -61,7 +63,7 @@ export default function Footer({ onOpenContactModal, onOpenPrivacyModal }: Foote
           {/* Col 3: Direct Contact */}
           <div className="space-y-2">
             <div className="text-xs font-semibold uppercase tracking-wider text-white">
-              Contato Direto
+              {t.footer.contactTitle}
             </div>
             <ul className="space-y-2">
               <li>
@@ -78,7 +80,7 @@ export default function Footer({ onOpenContactModal, onOpenPrivacyModal }: Foote
                   onClick={onOpenContactModal}
                   className="text-xs font-medium text-amber-400 hover:text-amber-300 underline underline-offset-4"
                 >
-                  Baixar Cartão Virtual (.vcf)
+                  {t.footer.downloadCard}
                 </button>
               </li>
             </ul>
@@ -89,7 +91,7 @@ export default function Footer({ onOpenContactModal, onOpenPrivacyModal }: Foote
         {/* Bottom Bar: Copyright & Respectful notes */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-neutral-500">
           <div>
-            © {currentYear} {driverProfile.name}. Todos os direitos reservados.
+            © {currentYear} {driverProfile.name}. {t.footer.rights}
           </div>
           <div className="flex items-center gap-4">
             <button
@@ -97,10 +99,10 @@ export default function Footer({ onOpenContactModal, onOpenPrivacyModal }: Foote
               onClick={onOpenPrivacyModal}
               className="hover:text-amber-400 underline underline-offset-4 decoration-neutral-700 hover:decoration-amber-400/60 transition-colors cursor-pointer"
             >
-              Privacidade e Segurança
+              {t.footer.privacy}
             </button>
             <span aria-hidden="true">·</span>
-            <span>Fortaleza - Ceará, Brasil</span>
+            <span>{t.footer.place}</span>
           </div>
         </div>
 

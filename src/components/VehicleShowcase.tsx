@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Wifi, Coffee, Thermometer, Volume2, Sparkles, Briefcase, Car, Check, ChevronRight } from 'lucide-react';
-import { driverProfile } from '../data/driverData';
+import { useI18n } from '../i18n/LanguageContext';
 
 import exteriorImg from '../assets/images/c4_cactus_white_suv_1791550207794.jpg';
 import interiorImg from '../assets/images/c4_cactus_interior_1791550216768.jpg';
@@ -8,13 +8,23 @@ import interiorImg from '../assets/images/c4_cactus_interior_1791550216768.jpg';
 type ViewMode = 'exterior' | 'interior' | 'cockpit';
 
 export default function VehicleShowcase() {
+  const { t } = useI18n();
   const [activeView, setActiveView] = useState<ViewMode>('exterior');
   const [activeAmenityId, setActiveAmenityId] = useState<string>('climate');
 
   const views = [
-    { id: 'exterior', label: 'C4 Cactus Branco (Exterior)', short: 'Exterior', img: exteriorImg, caption: 'Citroën C4 Cactus Feel Pack 2022 Branco: SUV moderno, linhas marcantes e presença elegante.' },
-    { id: 'interior', label: 'Cabine & Conforto Traseiro', short: 'Cabine', img: interiorImg, caption: 'Interior higienizado, bancos confortáveis, ar-condicionado gelado e água mineral disponível.' },
+    { id: 'exterior', img: exteriorImg, ...t.vehicle.views[0] },
+    { id: 'interior', img: interiorImg, ...t.vehicle.views[1] },
   ];
+
+  const amenityIcons: Record<string, string> = {
+    climate: 'Thermometer',
+    water: 'Coffee',
+    charger: 'Wifi',
+    sound: 'Volume2',
+    luggage: 'Briefcase',
+    hygiene: 'Sparkles',
+  };
 
   const currentViewObj = views.find((v) => v.id === activeView) || views[0];
 
@@ -35,13 +45,13 @@ export default function VehicleShowcase() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl">
             <div className="text-xs font-semibold uppercase tracking-wider text-amber-400 mb-2">
-              O Veículo
+              {t.vehicle.kicker}
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
-              Citroën C4 Cactus Feel Pack 2022 Branco
+              {t.vehicle.title}
             </h2>
             <p className="mt-3 text-base text-neutral-300">
-              Conforto de SUV francês com suspensão macia, ar-condicionado potente e espaço ideal para você e suas malas.
+              {t.vehicle.subtitle}
             </p>
           </div>
 
@@ -122,10 +132,10 @@ export default function VehicleShowcase() {
             {/* Vehicle Technical Features List */}
             <div className="mt-4 p-6 rounded-xl bg-neutral-900/50 border border-white/10">
               <div className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-4">
-                Diferenciais do Citroën C4 Cactus Feel Pack
+                {t.vehicle.featuresTitle}
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-neutral-300">
-                {driverProfile.vehicle.features.map((feat, i) => (
+                {t.vehicle.features.map((feat, i) => (
                   <div key={i} className="flex items-start gap-2.5">
                     <Check className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                     <span>{feat}</span>
@@ -139,11 +149,11 @@ export default function VehicleShowcase() {
           {/* Interactive Amenities Drawer (Col 4) */}
           <div className="lg:col-span-4 min-w-0 flex flex-col space-y-3">
             <div className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-1">
-              Conforto a Bordo em Fortaleza
+              {t.vehicle.amenitiesTitle}
             </div>
 
-            {driverProfile.amenities.map((item) => {
-              const Icon = iconMap[item.icon] || Coffee;
+            {t.vehicle.amenities.map((item) => {
+              const Icon = iconMap[amenityIcons[item.id]] || Coffee;
               const isSelected = activeAmenityId === item.id;
 
               return (
@@ -178,8 +188,8 @@ export default function VehicleShowcase() {
             })}
 
             <div className="mt-4 p-4 rounded-xl bg-amber-400/5 border border-amber-400/20 text-xs text-neutral-300 leading-relaxed">
-              <span className="font-semibold text-amber-300">Viagens com Bagagens & Praia: </span>
-              Porta-malas espaçoso para malas de viagem, bolsas de praia, pranchas pequenas (com rebatimento) ou compras nos shoppings de Fortaleza.
+              <span className="font-semibold text-amber-300">{t.vehicle.luggageNoteTitle}</span>
+              {t.vehicle.luggageNote}
             </div>
 
           </div>

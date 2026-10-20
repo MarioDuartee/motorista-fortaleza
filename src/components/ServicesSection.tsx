@@ -1,12 +1,15 @@
 import { Plane, Navigation, Briefcase, PartyPopper, Check, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { driverProfile } from '../data/driverData';
+import { useI18n } from '../i18n/LanguageContext';
+import type { ServiceId } from '../types';
 
 interface ServicesSectionProps {
-  onSelectServiceForQuote: (serviceTitle: string) => void;
+  onSelectServiceForQuote: (serviceId: ServiceId) => void;
 }
 
 export default function ServicesSection({ onSelectServiceForQuote }: ServicesSectionProps) {
+  const { t } = useI18n();
   const serviceIcons: Record<string, React.ElementType> = {
     transfers: Plane,
     beachpark: Navigation,
@@ -21,19 +24,19 @@ export default function ServicesSection({ onSelectServiceForQuote }: ServicesSec
         {/* Header */}
         <div className="max-w-3xl">
           <div className="text-xs font-semibold uppercase tracking-wider text-amber-400 mb-2">
-            Modalidades de Atendimento
+            {t.services.kicker}
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight text-balance">
-            Soluções completas para cada momento do seu dia
+            {t.services.title}
           </h2>
           <p className="mt-3 text-base text-neutral-300">
-            Desde um deslocamento pontual para não perder o voo até diárias completas para acompanhar delegações e reuniões de negócios.
+            {t.services.subtitle}
           </p>
         </div>
 
         {/* Services 2x2 Grid with Bento Hierarchy */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {driverProfile.services.map((service, idx) => {
+          {t.services.items.map((service, idx) => {
             const Icon = serviceIcons[service.id] || Navigation;
 
             return (
@@ -51,7 +54,7 @@ export default function ServicesSection({ onSelectServiceForQuote }: ServicesSec
                       <Icon className="w-6 h-6" />
                     </div>
                     <span className="font-mono text-xs sm:text-sm font-semibold text-neutral-300 bg-neutral-800/80 px-3 py-1 rounded-md border border-white/5">
-                      {service.priceStartingAt}
+                      {service.price}
                     </span>
                   </div>
 
@@ -86,10 +89,10 @@ export default function ServicesSection({ onSelectServiceForQuote }: ServicesSec
 
                 <div className="mt-8 pt-4">
                   <button
-                    onClick={() => onSelectServiceForQuote(service.title)}
+                    onClick={() => onSelectServiceForQuote(service.id as ServiceId)}
                     className="w-full flex items-center justify-center gap-2 py-3 px-4 text-xs sm:text-sm font-semibold text-white bg-neutral-800 hover:bg-amber-400 hover:text-neutral-950 rounded-lg transition-all duration-200 cursor-pointer"
                   >
-                    <span>Cotar e Agendar Este Serviço</span>
+                    <span>{t.services.quoteButton}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -108,10 +111,10 @@ export default function ServicesSection({ onSelectServiceForQuote }: ServicesSec
         >
           <div className="text-center md:text-left">
             <h4 className="text-sm font-bold text-white">
-              Cidades e Rotas Frequentes Atendidas
+              {t.services.regionTitle}
             </h4>
             <p className="mt-1 text-xs text-neutral-400">
-              {driverProfile.operatingCities.join(' · ')} e outros destinos sob consulta prévia.
+              {t.services.cities.join(' · ')}{t.services.regionSuffix}
             </p>
           </div>
           <a
@@ -120,7 +123,7 @@ export default function ServicesSection({ onSelectServiceForQuote }: ServicesSec
             rel="noopener noreferrer"
             className="px-4 py-2 text-xs font-semibold text-amber-400 hover:text-amber-300 border border-amber-400/30 hover:border-amber-400 rounded-lg transition-colors whitespace-nowrap shrink-0"
           >
-            Consultar Rota Personalizada
+            {t.services.customRoute}
           </a>
         </motion.div>
 
